@@ -27,7 +27,6 @@
 #include "Kaleidoscope-HostOS.h"
 #include "Kaleidoscope/HostOS-select.h"
 #include "Kaleidoscope-Unicode.h"
-#include <Kaleidoscope-LangPack-Hungarian.h>
 
 // Support for controlling the keyboard's LEDs
 #include "Kaleidoscope-LEDControl.h"
@@ -77,9 +76,41 @@
   * a macro key is pressed.
   */
 
-enum { MACRO_VERSION_INFO,
-       MACRO_ANY,
-       E_AIGU
+enum { 
+      MACRO_VERSION_INFO,
+      
+      E_AIGU,
+      E_GRAVE,
+      E_CIRCONFLEXE,
+      
+      A_GRAVE,
+      A_TREMA,
+      A_CIRCONFLEXE,
+
+      O_CIRCONFLEXE,
+      O_TREMA,
+
+      I_TREMA,
+
+      U_GRAVE,
+      U_TREMA,
+      
+      C_CEDILLE,
+      
+      E_DANS_A,
+      E_DANS_O,
+
+      EURO_POUND,
+
+      DEAD_AIGU,
+      DEAD_GRAVE,
+      DEAD_CIRCONFLEXE,
+      DEAD_TREMA,
+      DEAD_TILDE,
+      
+      M_WIN,
+      M_MAC,
+      M_LNX
      };
 
 
@@ -142,7 +173,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_LeftShift, Key_Backspace, Key_LeftAlt, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
+   ___,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
    Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
                   Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
@@ -150,23 +181,23 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ShiftToLayer(FUNCTION)),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,           Key_F12,      Key_F3,     Key_F4,       Key_NonUsPound,           Key_LEDEffectNext,
-   Key_Tab,  ___,              Key_mouseUp, ___,        Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
-   Key_Home, Key_mouseL,       Key_mouseDn, Key_mouseR, Key_mouseBtnL, Key_mouseWarpNW,
-   Key_End,  Key_PrintScreen,  Key_Insert,  ___,        Key_mouseBtnM, Key_mouseWarpSW,  Key_mouseWarpSE,
+  (M(DEAD_TILDE),      Key_F1,  Key_F12,  Key_F3, Key_F4, M(EURO_POUND), Key_LEDEffectNext,
+   Key_Tab,  M(A_TREMA), M(A_CIRCONFLEXE), ___,        ___, ___, ___,
+   Key_Home, M(A_GRAVE),  M(DEAD_GRAVE), ___, M(DEAD_AIGU), M(DEAD_TREMA),
+   Key_End,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
    Key_LeftGui, Key_Delete, Key_Enter, ___,
    ___,
 
    Consumer_VolumeIncrement, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Consumer_PlaySlashPause,    Key_LeftCurlyBracket, Key_RightCurlyBracket,     ___,    Key_LeftBracket, Key_RightBracket, Key_Pipe,
-                               Key_LeftBracket, ___, M(E_AIGU), ___, ___, ___,
+   Consumer_PlaySlashPause,    Key_LeftCurlyBracket, Key_RightCurlyBracket,     M(U_GRAVE),    M(U_TREMA), M(O_TREMA), Key_Pipe,
+                               Key_LeftBracket, M(E_GRAVE), M(E_AIGU), M(I_TREMA), M(O_CIRCONFLEXE), M(E_CIRCONFLEXE),
    Consumer_VolumeDecrement,   Key_RightBracket, Key_LeftArrow, Key_UpArrow, Key_DownArrow,  Key_RightArrow,    Key_Backslash,
    ___, ___, Key_Enter, ___,
    ___),
 
 
   [NUMPAD] =  KEYMAP_STACKED
-  (___, ___, ___, ___, ___, ___, ___,
+  (___, M(M_LNX), M(M_WIN), M(M_MAC), ___, ___, ___,
    ___, ___, ___, ___, ___, ___, ___,
    ___, ___, ___, ___, ___, ___,
    ___, ___, ___, ___, ___, ___, ___,
@@ -189,7 +220,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
    ShiftToLayer(FUNCTION),
 
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
+   ___,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
    Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
                   Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
    Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
@@ -212,24 +243,6 @@ static void versionInfoMacro(uint8_t keyState) {
   }
 }
 
-/** anyKeyMacro is used to provide the functionality of the 'Any' key.
- *
- * When the 'any key' macro is toggled on, a random alphanumeric key is
- * selected. While the key is held, the function generates a synthetic
- * keypress event repeating that randomly selected key.
- *
- */
-
-static void anyKeyMacro(uint8_t keyState) {
-  static Key lastKey;
-  if (keyToggledOn(keyState))
-    lastKey.keyCode = Key_A.keyCode + (uint8_t)(millis() % 36);
-
-  if (keyIsPressed(keyState))
-    kaleidoscope::hid::pressKey(lastKey);
-}
-
-
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
 
@@ -241,36 +254,139 @@ static void anyKeyMacro(uint8_t keyState) {
     Each 'case' statement should call out to a function to handle the macro in question.
 
  */
-
-const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
-  bool shifted = kaleidoscope::hid::isModifierKeyActive(Key_LeftShift) ||
-                 kaleidoscope::hid::isModifierKeyActive(Key_RightShift);
-                 
+ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   switch (macroIndex) {
     case MACRO_VERSION_INFO:
       versionInfoMacro(keyState);
       break;
-    case MACRO_ANY:
-      anyKeyMacro(keyState);
-      break;
     case E_AIGU:
-      // e E
-      unicode(shifted ? 0x0201 : 0x0103, keyState);
+      win_latin1_shift(233, 198, keyState);
+      break;
+    case E_GRAVE:
+      win_latin1_shift(232, 200, keyState);
+      break;
+    case E_CIRCONFLEXE:
+      win_latin1_shift(234, 202, keyState);
+      break;
+    case A_GRAVE:
+      win_latin1_shift(224, 192, keyState);
+      break;
+    case A_TREMA:
+      win_latin1_shift(228, 196, keyState);
+      break;
+    case A_CIRCONFLEXE:
+      win_latin1_shift(226, 194, keyState);
+      break;
+    case O_CIRCONFLEXE:
+      win_latin1_shift(244, 212, keyState);
+      break;
+    case O_TREMA:
+      win_latin1_shift(246, 214, keyState);
+      break;
+    case I_TREMA:
+      win_latin1_shift(239, 207, keyState);
+      break;
+    case U_GRAVE:
+      win_latin1_shift(249, 217, keyState);
+      break;
+    case U_TREMA:
+      win_latin1_shift(252, 220, keyState);
+      break;
+    case C_CEDILLE:
+      win_latin1_shift(231, 199, keyState);
+      break;
+    case E_DANS_A:
+      win_latin1_shift(230, 198, keyState);
+      break;
+    case E_DANS_O:
+      win_latin1_shift(156, 140, keyState);
+      break;
+    case EURO_POUND:
+      win_latin1_shift(128, 163, keyState);
+      break;
+    case DEAD_AIGU:
+      win_latin1_shift(39, 0, keyState);
+      break;
+    case DEAD_GRAVE:
+      win_latin1_shift(96, 0, keyState);
+      break;
+    case DEAD_CIRCONFLEXE:
+      win_latin1_shift(94, 0, keyState);
+      break;
+    case DEAD_TREMA:
+      win_latin1_shift(34, 0, keyState);
+      break;
+    case DEAD_TILDE:
+      win_latin1_shift(126, 0, keyState);
+      break;
+    case M_LNX:
+      HostOS.os(kaleidoscope::hostos::LINUX);
+      break;
+    case M_MAC:
+      HostOS.os(kaleidoscope::hostos::OSX);
+      break;
+    case M_WIN:
+      HostOS.os(kaleidoscope::hostos::WINDOWS);
       break;
   }
-
   return MACRO_NONE;
 }
 
-static void unicode(uint32_t codepoint, uint8_t keyState) {
+// static void unicode(uint32_t lower, uint32_t upper, uint8_t keyState) {
+//   if (!keyToggledOn(keyState)) {
+//     return;
+//   }
+//   bool shifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
+//   || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+//
+//   Unicode.type(shifted ? lower : upper);
+// }
+
+static void win_latin1_shift(int lower, int upper, uint8_t keyState) {
+  bool shifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
+  || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+
+  win_latin1(shifted ? upper : lower, keyState);
+}
+
+static void win_latin1(int keycode, uint8_t keyState) {
   if (!keyToggledOn(keyState)) {
     return;
   }
-  
-  Unicode.type(codepoint);
-  //Unicode.type(codepoint - (shifted ? 0x20 : 0));
+  int digits[4];
+  digits[0] = 0; // (keycode > 999) ? keycode / 1000 % 10 : 0;
+  digits[1] = (keycode > 99) ? keycode / 100 % 10 : 0;
+  digits[2] = (keycode > 9) ? keycode / 10 % 10 : 0;
+  digits[3] = keycode % 10;
+  kaleidoscope::hid::pressRawKey(Key_LeftAlt);
+  kaleidoscope::hid::sendKeyboardReport();
+  for (int i=0; i < 4; i++) {
+    Key key = keypad(digits[i]);
+    kaleidoscope::hid::pressRawKey(key);
+    kaleidoscope::hid::sendKeyboardReport();
+    kaleidoscope::hid::releaseRawKey(key);
+    kaleidoscope::hid::sendKeyboardReport();    
+    delay(1);    
+  }
+  kaleidoscope::hid::releaseRawKey(Key_LeftAlt);
+  kaleidoscope::hid::sendKeyboardReport();  
 }
 
+static Key keypad(int digit) {
+  switch (digit) {
+    case 0: return Key_Keypad0;
+    case 1: return Key_Keypad1;
+    case 2: return Key_Keypad2;
+    case 3: return Key_Keypad3;
+    case 4: return Key_Keypad4;
+    case 5: return Key_Keypad5;
+    case 6: return Key_Keypad6;
+    case 7: return Key_Keypad7;
+    case 8: return Key_Keypad8;
+    case 9: return Key_Keypad9;
+  }
+  return Key_Keypad0;
+}
 
 // These 'solid' color effect definitions define a rainbow of
 // LED color modes calibrated to draw 500mA or less on the
@@ -366,10 +482,6 @@ void setup() {
   // called 'BlazingTrail'. For details on other options,
   // see https://github.com/keyboardio/Kaleidoscope-LED-Stalker
   StalkerEffect.variant = STALKER(BlazingTrail);
-
-#if !KALEIDOSCOPE_HOSTOS_GUESSER
-  HostOS.os(kaleidoscope::hostos::WINDOWS);
-#endif
 
   // We want to make sure that the firmware starts with LED effects off
   // This avoids over-taxing devices that don't have a lot of power to share
