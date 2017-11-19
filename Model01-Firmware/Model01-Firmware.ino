@@ -167,7 +167,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    
   [COLEMAK] = KEYMAP_STACKED
   (Key_Backtick, Key_1, Key_2, Key_3, Key_4, Key_5, Key_Escape,
-   Key_Tab, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
+   Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
    Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
    Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Delete,
    Key_LeftShift, Key_Backspace, Key_LeftAlt, Key_LeftControl,
@@ -182,17 +182,17 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [FUNCTION] =  KEYMAP_STACKED
   (M(DEAD_TILDE),      Key_F1,  Key_F12,  Key_F3, Key_F4, M(EURO_POUND), Key_LEDEffectNext,
-   Key_Tab,  M(A_TREMA), M(A_CIRCONFLEXE), ___,        ___, ___, ___,
-   Key_Home, M(A_GRAVE),  M(DEAD_GRAVE), ___, M(DEAD_AIGU), M(DEAD_TREMA),
-   Key_End,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
-   Key_LeftGui, Key_Delete, Key_Enter, ___,
+   Key_Tab,  M(A_TREMA), M(A_CIRCONFLEXE), M(DEAD_TILDE), M(DEAD_AIGU), ___, ___,
+   Key_Home, M(A_GRAVE),  M(DEAD_GRAVE), Key_Home, Key_End, M(DEAD_TREMA),
+   Key_End,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  Key_Enter,
+   ___, Key_Delete, ___, ___,
    ___,
 
    Consumer_VolumeIncrement, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
    Consumer_PlaySlashPause,    Key_LeftCurlyBracket, Key_RightCurlyBracket,     M(U_GRAVE),    M(U_TREMA), M(O_TREMA), Key_Pipe,
                                Key_LeftBracket, M(E_GRAVE), M(E_AIGU), M(I_TREMA), M(O_CIRCONFLEXE), M(E_CIRCONFLEXE),
    Consumer_VolumeDecrement,   Key_RightBracket, Key_LeftArrow, Key_UpArrow, Key_DownArrow,  Key_RightArrow,    Key_Backslash,
-   ___, ___, Key_Enter, ___,
+   ___, ___, ___, ___,
    ___),
 
 
