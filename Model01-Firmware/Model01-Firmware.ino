@@ -169,11 +169,11 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
   (Key_Backtick, Key_1, Key_2, Key_3, Key_4, Key_5, Key_Escape,
    Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
    Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Delete,
-   Key_LeftShift, Key_Backspace, Key_LeftAlt, Key_LeftControl,
+   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_LeftAlt,
+   Key_LeftShift, Key_Backspace, Key_Enter, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
-   ___,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
+   Key_Delete,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
    Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
                   Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
@@ -182,9 +182,9 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [FUNCTION] =  KEYMAP_STACKED
   (M(DEAD_TILDE),      Key_F1,  Key_F12,  Key_F3, Key_F4, M(EURO_POUND), Key_LEDEffectNext,
-   Key_Tab,  M(A_TREMA), M(A_CIRCONFLEXE), M(DEAD_TILDE), M(DEAD_AIGU), ___, ___,
+   ___,  M(A_TREMA), M(A_CIRCONFLEXE), M(DEAD_TILDE), M(DEAD_AIGU), ___, ___,
    Key_Home, M(A_GRAVE),  M(DEAD_GRAVE), Key_Home, Key_End, M(DEAD_TREMA),
-   Key_End,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  Key_Enter,
+   Key_End,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
    ___, Key_Delete, ___, ___,
    ___,
 
@@ -260,64 +260,64 @@ static void versionInfoMacro(uint8_t keyState) {
       versionInfoMacro(keyState);
       break;
     case E_AIGU:
-      win_latin1_shift(233, 198, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(E), U(LeftAlt), U(LeftControl));
       break;
     case E_GRAVE:
-      win_latin1_shift(232, 200, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(N), U(LeftAlt), U(LeftControl));
       break;
     case E_CIRCONFLEXE:
-      win_latin1_shift(234, 202, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Quote), U(LeftAlt), U(LeftControl));
       break;
     case A_GRAVE:
-      win_latin1_shift(224, 192, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(A), U(LeftAlt), U(LeftControl));
       break;
     case A_TREMA:
-      win_latin1_shift(228, 196, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Q), U(LeftAlt), U(LeftControl));
       break;
     case A_CIRCONFLEXE:
-      win_latin1_shift(226, 194, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(W), U(LeftAlt), U(LeftControl));
       break;
     case O_CIRCONFLEXE:
-      win_latin1_shift(244, 212, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(O), U(LeftAlt), U(LeftControl));
       break;
     case O_TREMA:
-      win_latin1_shift(246, 214, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Semicolon), U(LeftAlt), U(LeftControl));
       break;
     case I_TREMA:
-      win_latin1_shift(239, 207, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(I), U(LeftAlt), U(LeftControl));
       break;
     case U_GRAVE:
-      win_latin1_shift(249, 217, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(U), U(LeftAlt), U(LeftControl));
       break;
     case U_TREMA:
-      win_latin1_shift(252, 220, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Y), U(LeftAlt), U(LeftControl));
       break;
     case C_CEDILLE:
-      win_latin1_shift(231, 199, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(C), U(LeftAlt), U(LeftControl));
       break;
     case E_DANS_A:
-      win_latin1_shift(230, 198, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Z), U(LeftAlt), U(LeftControl));
       break;
     case E_DANS_O:
-      win_latin1_shift(156, 140, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(V), U(LeftAlt), U(LeftControl));
       break;
     case EURO_POUND:
-      win_latin1_shift(128, 163, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(5), U(LeftAlt), U(LeftControl));
       break;
     case DEAD_AIGU:
-      win_latin1_shift(39, 0, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(P), U(LeftAlt), U(LeftControl));
       break;
     case DEAD_GRAVE:
-      win_latin1_shift(96, 0, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(R), U(LeftAlt), U(LeftControl));
       break;
     case DEAD_CIRCONFLEXE:
-      win_latin1_shift(94, 0, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(X), U(LeftAlt), U(LeftControl));
       break;
     case DEAD_TREMA:
-      win_latin1_shift(34, 0, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(D), U(LeftAlt), U(LeftControl));
       break;
     case DEAD_TILDE:
-      win_latin1_shift(126, 0, keyState);
+      return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(F), U(LeftAlt), U(LeftControl));
       break;
     case M_LNX:
       HostOS.os(kaleidoscope::hostos::LINUX);
@@ -330,62 +330,6 @@ static void versionInfoMacro(uint8_t keyState) {
       break;
   }
   return MACRO_NONE;
-}
-
-// static void unicode(uint32_t lower, uint32_t upper, uint8_t keyState) {
-//   if (!keyToggledOn(keyState)) {
-//     return;
-//   }
-//   bool shifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
-//   || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
-//
-//   Unicode.type(shifted ? lower : upper);
-// }
-
-static void win_latin1_shift(int lower, int upper, uint8_t keyState) {
-  bool shifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
-  || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
-
-  win_latin1(shifted ? upper : lower, keyState);
-}
-
-static void win_latin1(int keycode, uint8_t keyState) {
-  if (!keyToggledOn(keyState)) {
-    return;
-  }
-  int digits[4];
-  digits[0] = 0; // (keycode > 999) ? keycode / 1000 % 10 : 0;
-  digits[1] = (keycode > 99) ? keycode / 100 % 10 : 0;
-  digits[2] = (keycode > 9) ? keycode / 10 % 10 : 0;
-  digits[3] = keycode % 10;
-  kaleidoscope::hid::pressRawKey(Key_LeftAlt);
-  kaleidoscope::hid::sendKeyboardReport();
-  for (int i=0; i < 4; i++) {
-    Key key = keypad(digits[i]);
-    kaleidoscope::hid::pressRawKey(key);
-    kaleidoscope::hid::sendKeyboardReport();
-    kaleidoscope::hid::releaseRawKey(key);
-    kaleidoscope::hid::sendKeyboardReport();    
-    delay(1);    
-  }
-  kaleidoscope::hid::releaseRawKey(Key_LeftAlt);
-  kaleidoscope::hid::sendKeyboardReport();  
-}
-
-static Key keypad(int digit) {
-  switch (digit) {
-    case 0: return Key_Keypad0;
-    case 1: return Key_Keypad1;
-    case 2: return Key_Keypad2;
-    case 3: return Key_Keypad3;
-    case 4: return Key_Keypad4;
-    case 5: return Key_Keypad5;
-    case 6: return Key_Keypad6;
-    case 7: return Key_Keypad7;
-    case 8: return Key_Keypad8;
-    case 9: return Key_Keypad9;
-  }
-  return Key_Keypad0;
 }
 
 // These 'solid' color effect definitions define a rainbow of
