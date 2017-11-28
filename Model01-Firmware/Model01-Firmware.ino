@@ -5,15 +5,10 @@
 #ifndef BUILD_INFORMATION
 #define BUILD_INFORMATION "locally built"
 #endif
-
-#define KALEIDOSCOPE_HOSTOS_GUESSER 1
-
-
 /**
- * These #include directives pull in the Kaleidoscope firmware core,
- * as well as the Kaleidoscope plugins we use in the Model 01's firmware
- */
-
+   These #include directives pull in the Kaleidoscope firmware core,
+   as well as the Kaleidoscope plugins we use in the Model 01's firmware
+*/
 
 // The Kaleidoscope core
 #include "Kaleidoscope.h"
@@ -23,10 +18,6 @@
 
 // Support for macros
 #include "Kaleidoscope-Macros.h"
-
-#include "Kaleidoscope-HostOS.h"
-#include "Kaleidoscope/HostOS-select.h"
-#include "Kaleidoscope-Unicode.h"
 
 // Support for controlling the keyboard's LEDs
 #include "Kaleidoscope-LEDControl.h"
@@ -62,122 +53,127 @@
 // Support for Keyboardio's internal keyboard testing mode
 #include "Kaleidoscope-Model01-TestMode.h"
 
+#include <Kaleidoscope-DualUse.h>
+
+#include <Kaleidoscope-Heatmap.h>
+//#include <Kaleidoscope-LED-Wavepool.h>
+#include <Kaleidoscope-LEDEffect-DigitalRain.h>
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
-  * The names aren't particularly important. What is important is that each
-  * is unique.
-  *
-  * These are the names of your macros. They'll be used in two places.
-  * The first is in your keymap definitions. There, you'll use the syntax
-  * `M(MACRO_NAME)` to mark a specific keymap position as triggering `MACRO_NAME`
-  *
-  * The second usage is in the 'switch' statement in the `macroAction` function.
-  * That switch statement actually runs the code associated with a macro when
-  * a macro key is pressed.
-  */
+    The names aren't particularly important. What is important is that each
+    is unique.
 
-enum { 
-      MACRO_VERSION_INFO,
-      
-      E_AIGU,
-      E_GRAVE,
-      E_CIRCONFLEXE,
-      
-      A_GRAVE,
-      A_TREMA,
-      A_CIRCONFLEXE,
+    These are the names of your macros. They'll be used in two places.
+    The first is in your keymap definitions. There, you'll use the syntax
+    `M(MACRO_NAME)` to mark a specific keymap position as triggering `MACRO_NAME`
 
-      O_CIRCONFLEXE,
-      O_TREMA,
+    The second usage is in the 'switch' statement in the `macroAction` function.
+    That switch statement actually runs the code associated with a macro when
+    a macro key is pressed.
+*/
 
-      I_TREMA,
+enum {
+  MACRO_VERSION_INFO,
 
-      U_GRAVE,
-      U_TREMA,
-      
-      C_CEDILLE,
-      
-      E_DANS_A,
-      E_DANS_O,
+  E_AIGU,
+  E_GRAVE,
+  E_CIRCONFLEXE,
 
-      EURO_POUND,
+  A_GRAVE,
+  A_TREMA,
+  A_CIRCONFLEXE,
 
-      DEAD_AIGU,
-      DEAD_GRAVE,
-      DEAD_CIRCONFLEXE,
-      DEAD_TREMA,
-      DEAD_TILDE,
-      
-      M_WIN,
-      M_MAC,
-      M_LNX
-     };
+  O_CIRCONFLEXE,
+  O_TREMA,
+
+  I_TREMA,
+
+  U_GRAVE,
+  U_TREMA,
+
+  C_CEDILLE,
+
+  E_DANS_A,
+  E_DANS_O,
+
+  EURO_POUND,
+
+  DEAD_AIGU,
+  DEAD_GRAVE,
+  DEAD_CIRCONFLEXE,
+  DEAD_TREMA,
+  DEAD_TILDE,
+
+  M_WIN,
+  M_MAC,
+  M_LNX
+};
 
 
 
 /** The Model 01's key layouts are defined as 'keymaps'. By default, there are three
-  * keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
-  * keymap.
-  *
-  * Each keymap is defined as a list using the 'KEYMAP_STACKED' macro, built
-  * of first the left hand's layout, followed by the right hand's layout.
-  *
-  * Keymaps typically consist mostly of `Key_` definitions. There are many, many keys
-  * defined as part of the USB HID Keyboard specification. You can find the names
-  * (if not yet the explanations) for all the standard `Key_` defintions offered by
-  * Kaleidoscope in these files:
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keyboard.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_consumerctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_sysctl.h
-  *    https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keymaps.h
-  *
-  * Additional things that should be documented here include
-  *   using ___ to let keypresses fall through to the previously active layer
-  *   using XXX to mark a keyswitch as 'blocked' on this layer
-  *   using ShiftToLayer() and LockLayer() keys to change the active keymap.
-  *   the special nature of the PROG key
-  *   keeping NUM and FN consistent and accessible on all layers
-  *
-  *
-  * The "keymaps" data structure is a list of the keymaps compiled into the firmware.
-  * The order of keymaps in the list is important, as the ShiftToLayer(#) and LockLayer(#)
-  * macros switch to key layers based on this list.
-  *
-  *
+    keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
+    keymap.
 
-  * A key defined as 'ShiftToLayer(FUNCTION)' will switch to FUNCTION while held.
-  * Similarly, a key defined as 'LockLayer(NUMPAD)' will switch to NUMPAD when tapped.
-  */
+    Each keymap is defined as a list using the 'KEYMAP_STACKED' macro, built
+    of first the left hand's layout, followed by the right hand's layout.
+
+    Keymaps typically consist mostly of `Key_` definitions. There are many, many keys
+    defined as part of the USB HID Keyboard specification. You can find the names
+    (if not yet the explanations) for all the standard `Key_` defintions offered by
+    Kaleidoscope in these files:
+       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keyboard.h
+       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_consumerctl.h
+       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_sysctl.h
+       https://github.com/keyboardio/Kaleidoscope/blob/master/src/key_defs_keymaps.h
+
+    Additional things that should be documented here include
+      using ___ to let keypresses fall through to the previously active layer
+      using XXX to mark a keyswitch as 'blocked' on this layer
+      using ShiftToLayer() and LockLayer() keys to change the active keymap.
+      the special nature of the PROG key
+      keeping NUM and FN consistent and accessible on all layers
+
+
+    The "keymaps" data structure is a list of the keymaps compiled into the firmware.
+    The order of keymaps in the list is important, as the ShiftToLayer(#) and LockLayer(#)
+    macros switch to key layers based on this list.
+
+
+
+    A key defined as 'ShiftToLayer(FUNCTION)' will switch to FUNCTION while held.
+    Similarly, a key defined as 'LockLayer(NUMPAD)' will switch to NUMPAD when tapped.
+*/
 
 /**
-  * Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
-  * The third one is layer 2.
-  * This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
-  * the numbers 0, 1 and 2.
-  */
+    Layers are "0-indexed" -- That is the first one is layer 0. The second one is layer 1.
+    The third one is layer 2.
+    This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
+    the numbers 0, 1 and 2.
+*/
 
 enum { COLEMAK, FUNCTION, NUMPAD, QWERTY }; // layers
 
 /* This comment temporarily turns off astyle's indent enforcement
- *   so we can make the keymaps actually resemble the physical key layout better
- */
+     so we can make the keymaps actually resemble the physical key layout better
+*/
 // *INDENT-OFF*
 
 const Key keymaps[][ROWS][COLS] PROGMEM = {
-   
+
   [COLEMAK] = KEYMAP_STACKED
   (Key_Backtick, Key_1, Key_2, Key_3, Key_4, Key_5, Key_Escape,
    Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
    Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_LeftAlt,
-   Key_LeftShift, Key_Backspace, Key_Enter, Key_LeftControl,
+   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, LCTRL(Key_LeftShift),
+   Key_LeftAlt, Key_Backspace, SFT_T(Enter), Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
    Key_Delete,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
    Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
                   Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightControl, Key_Enter, Key_Spacebar, Key_RightShift,
+   Key_RightControl, SFT_T(Enter), Key_Spacebar, Key_RightAlt,
    ShiftToLayer(FUNCTION)),
 
   [FUNCTION] =  KEYMAP_STACKED
@@ -232,9 +228,9 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 // *INDENT-ON*
 
 /** versionInfoMacro handles the 'firmware version info' macro
- *  When a key bound to the macro is pressed, this macro
- *  prints out the firmware build information as virtual keystrokes
- */
+    When a key bound to the macro is pressed, this macro
+    prints out the firmware build information as virtual keystrokes
+*/
 
 static void versionInfoMacro(uint8_t keyState) {
   if (keyToggledOn(keyState)) {
@@ -253,8 +249,8 @@ static void versionInfoMacro(uint8_t keyState) {
     The 'switch' statement should have a 'case' for each entry of the macro enum.
     Each 'case' statement should call out to a function to handle the macro in question.
 
- */
- const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
+*/
+const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   switch (macroIndex) {
     case MACRO_VERSION_INFO:
       versionInfoMacro(keyState);
@@ -320,13 +316,13 @@ static void versionInfoMacro(uint8_t keyState) {
       return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(F), U(LeftAlt), U(LeftControl));
       break;
     case M_LNX:
-      HostOS.os(kaleidoscope::hostos::LINUX);
+      //HostOS.os(kaleidoscope::hostos::LINUX);
       break;
     case M_MAC:
-      HostOS.os(kaleidoscope::hostos::OSX);
+      //HostOS.os(kaleidoscope::hostos::OSX);
       break;
     case M_WIN:
-      HostOS.os(kaleidoscope::hostos::WINDOWS);
+      //HostOS.os(kaleidoscope::hostos::WINDOWS);
       break;
   }
   return MACRO_NONE;
@@ -348,9 +344,9 @@ static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
 
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
-  * It's called when your keyboard first powers up. This is where you set up
-  * Kaleidoscope and any plugins.
-  */
+    It's called when your keyboard first powers up. This is where you set up
+    Kaleidoscope and any plugins.
+*/
 
 void setup() {
   // First, call Kaleidoscope's internal setup function
@@ -360,6 +356,7 @@ void setup() {
   // The order can be important. For example, LED effects are
   // added in the order they're listed here.
   Kaleidoscope.use(
+
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
     &BootGreetingEffect,
 
@@ -378,21 +375,25 @@ void setup() {
 
     // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
     // and slowly moves the rainbow across your keyboard
-    &LEDRainbowWaveEffect,
+    //&LEDRainbowWaveEffect,
+
+    &HeatmapEffect,
+    //    &WavepoolEffect,
+    &LEDDigitalRainEffect,
 
     // The chase effect follows the adventure of a blue pixel which chases a red pixel across
     // your keyboard. Spoiler: the blue pixel never catches the red pixel
     &LEDChaseEffect,
 
     // These static effects turn your keyboard's LEDs a variety of colors
-    &solidRed, &solidOrange, &solidYellow, &solidGreen, &solidBlue, &solidIndigo, &solidViolet,
+    //&solidRed, &solidOrange, &solidYellow, &solidGreen, &solidBlue, &solidIndigo, &solidViolet,
 
     // The breathe effect slowly pulses all of the LEDs on your keyboard
     &LEDBreatheEffect,
 
     // The AlphaSquare effect prints each character you type, using your
     // keyboard's LEDs as a display
-    &AlphaSquareEffect,
+    //&AlphaSquareEffect,
 
     // The stalker effect lights up the keys you've pressed recently
     &StalkerEffect,
@@ -401,21 +402,20 @@ void setup() {
     // with a custom LED effect
     &NumLock,
 
-    &HostOS,
-    &Unicode,
-    // The macros plugin adds support for macros
     &Macros,
-
-    // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
-    &MouseKeys
+    &DualUse
   );
+
+  //  WavepoolEffect.idle_timeout = 5000;  // 5 seconds
+  //  WavepoolEffect.activate();
+  // LEDDigitalRainEffect.DROP_TICKS = 22; // Make the rain fall faster
 
   // While we hope to improve this in the future, the NumLock plugin
   // needs to be explicitly told which keymap layer is your numpad layer
   NumLock.numPadLayer = NUMPAD;
 
   // We configure the AlphaSquare effect to use RED letters
-  AlphaSquare.color = { 255, 0, 0 };
+  //AlphaSquare.color = { 255, 0, 0 };
 
   // We set the brightness of the rainbow effects to 150 (on a scale of 0-255)
   // This draws more than 500mA, but looks much nicer than a dimmer effect
@@ -425,20 +425,22 @@ void setup() {
   // The LED Stalker mode has a few effects. The one we like is
   // called 'BlazingTrail'. For details on other options,
   // see https://github.com/keyboardio/Kaleidoscope-LED-Stalker
-  StalkerEffect.variant = STALKER(BlazingTrail);
+  //StalkerEffect.variant = STALKER(BlazingTrail);
+  StalkerEffect.variant = STALKER(Haunt, (CRGB(0, 128, 0)));
 
   // We want to make sure that the firmware starts with LED effects off
   // This avoids over-taxing devices that don't have a lot of power to share
   // with USB devices
   LEDOff.activate();
+
 }
 
 /** loop is the second of the standard Arduino sketch functions.
-  * As you might expect, it runs in a loop, never exiting.
-  *
-  * For Kaleidoscope-based keyboard firmware, you usually just want to
-  * call Kaleidoscope.loop(); and not do anything custom here.
-  */
+    As you might expect, it runs in a loop, never exiting.
+
+    For Kaleidoscope-based keyboard firmware, you usually just want to
+    call Kaleidoscope.loop(); and not do anything custom here.
+*/
 
 void loop() {
   Kaleidoscope.loop();
