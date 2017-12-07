@@ -177,8 +177,8 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ShiftToLayer(FUNCTION)),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (M(DEAD_TILDE),      Key_F1,  Key_F12,  Key_F3, Key_F4, M(EURO_POUND), Key_LEDEffectNext,
-   ___,  M(A_TREMA), M(A_CIRCONFLEXE), M(DEAD_TILDE), M(DEAD_AIGU), ___, ___,
+  (M(DEAD_TILDE),      Key_F1,  Key_F2,  Key_F3, Key_F4, Key_F5, Key_LEDEffectNext,
+   ___,  M(A_TREMA), M(A_CIRCONFLEXE), M(DEAD_TILDE), M(DEAD_AIGU), M(EURO_POUND), Key_F12,
    Key_Home, M(A_GRAVE),  M(DEAD_GRAVE), Key_Home, Key_End, M(DEAD_TREMA),
    Key_End,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
    ___, Key_Delete, ___, ___,
