@@ -54,9 +54,9 @@
 #include "Kaleidoscope-Model01-TestMode.h"
 
 #include <Kaleidoscope-DualUse.h>
+#include <Kaleidoscope-SpaceCadet.h>
 
 #include <Kaleidoscope-Heatmap.h>
-//#include <Kaleidoscope-LED-Wavepool.h>
 #include <Kaleidoscope-LEDEffect-DigitalRain.h>
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
@@ -166,14 +166,14 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
    Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
    Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, LCTRL(Key_LeftShift),
-   Key_LeftAlt, Key_Backspace, SFT_T(Enter), Key_LeftControl,
+   Key_LeftAlt, Key_Backspace, Key_LeftShift, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
    Key_Delete,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
    Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
                   Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightControl, SFT_T(Enter), Key_Spacebar, Key_Enter,
+   Key_RightControl, Key_RightShift, Key_Spacebar, Key_Enter,
    ShiftToLayer(FUNCTION)),
 
   [FUNCTION] =  KEYMAP_STACKED
@@ -378,7 +378,6 @@ void setup() {
     //&LEDRainbowWaveEffect,
 
     &HeatmapEffect,
-    //    &WavepoolEffect,
     &LEDDigitalRainEffect,
 
     // The chase effect follows the adventure of a blue pixel which chases a red pixel across
@@ -403,11 +402,26 @@ void setup() {
     &NumLock,
 
     &Macros,
-    &DualUse
+    &DualUse,
+    &SpaceCadet
   );
+  
+   //Set the keymap with a 250ms timeout per-key
+  //Setting is {KeyThatWasPressed, AlternativeKeyToSend, TimeoutInMS}
+  //Note: must end with the SPACECADET_MAP_END delimiter
+  static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
+    {Key_LeftShift, Key_Enter, 250}
+    , {Key_RightShift, Key_Enter, 250}
+//    , {Key_LeftGui, Key_LeftCurlyBracket, 250}
+//    , {Key_RightAlt, Key_RightCurlyBracket, 250}
+//    , {Key_LeftAlt, Key_RightCurlyBracket, 250}
+//    , {Key_LeftControl, Key_LeftCurlyBracket, 250}
+//    , {Key_RightControl, Key_RightCurlyBracket, 250}
+    , SPACECADET_MAP_END
+  };
+  //Set the map.
+  SpaceCadet.map = spacecadetmap;
 
-  //  WavepoolEffect.idle_timeout = 5000;  // 5 seconds
-  //  WavepoolEffect.activate();
   // LEDDigitalRainEffect.DROP_TICKS = 22; // Make the rain fall faster
 
   // While we hope to improve this in the future, the NumLock plugin
