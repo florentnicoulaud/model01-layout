@@ -174,7 +174,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
                   Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightControl, Key_Enter, Key_Spacebar, Key_Enter,
+   Key_RightControl, Key_Enter, Key_Spacebar, Key_RightAlt,
    ShiftToLayer(FUNCTION)),
 
   [FUNCTION] =  KEYMAP_STACKED
@@ -359,7 +359,7 @@ void setup() {
   Kaleidoscope.use(
 
     &Qukeys,
-    
+
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
     &BootGreetingEffect,
 
