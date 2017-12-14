@@ -55,6 +55,7 @@
 
 #include <Kaleidoscope-DualUse.h>
 #include <Kaleidoscope-SpaceCadet.h>
+#include <Kaleidoscope-Qukeys.h>
 
 #include <Kaleidoscope-Heatmap.h>
 #include <Kaleidoscope-LEDEffect-DigitalRain.h>
@@ -166,14 +167,14 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
    Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
    Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, LCTRL(Key_LeftShift),
-   Key_LeftAlt, Key_Backspace, Key_LeftShift, Key_LeftControl,
+   Key_LeftAlt, Key_Backspace, Key_Enter, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
    Key_Delete,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
    Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
                   Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightControl, Key_RightShift, Key_Spacebar, Key_Enter,
+   Key_RightControl, Key_Enter, Key_Spacebar, Key_Enter,
    ShiftToLayer(FUNCTION)),
 
   [FUNCTION] =  KEYMAP_STACKED
@@ -357,6 +358,8 @@ void setup() {
   // added in the order they're listed here.
   Kaleidoscope.use(
 
+    &Qukeys,
+    
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
     &BootGreetingEffect,
 
@@ -401,26 +404,35 @@ void setup() {
     // with a custom LED effect
     &NumLock,
 
-    &Macros,
-    &DualUse,
-    &SpaceCadet
+    &Macros
+    //    &DualUse,
+    //    &SpaceCadet,
   );
-  
-   //Set the keymap with a 250ms timeout per-key
+
+
+  QUKEYS(
+    kaleidoscope::Qukey(0, 2, 7, Key_LeftShift),     // Enter/shift
+    kaleidoscope::Qukey(0, 2, 8, Key_LeftShift)     // Enter/shift
+//    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),      // ( / Ctrl
+//    kaleidoscope::Qukey(0, 3, 8, Key_RightControl),      // ) / Ctrl
+//    kaleidoscope::Qukey(0, 2, 3, Key_LeftControl),  // D/ctrl
+//    kaleidoscope::Qukey(0, 2, 4, Key_LeftShift)     // F/shift
+  )
+  //Set the keymap with a 250ms timeout per-key
   //Setting is {KeyThatWasPressed, AlternativeKeyToSend, TimeoutInMS}
   //Note: must end with the SPACECADET_MAP_END delimiter
-  static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
-    {Key_LeftShift, Key_Enter, 250}
-    , {Key_RightShift, Key_Enter, 250}
-//    , {Key_LeftGui, Key_LeftCurlyBracket, 250}
-//    , {Key_RightAlt, Key_RightCurlyBracket, 250}
-//    , {Key_LeftAlt, Key_RightCurlyBracket, 250}
-//    , {Key_LeftControl, Key_LeftCurlyBracket, 250}
-//    , {Key_RightControl, Key_RightCurlyBracket, 250}
-    , SPACECADET_MAP_END
-  };
+  //  static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
+  //    {Key_LeftShift, Key_Enter, 250}
+  //    , {Key_RightShift, Key_Enter, 250}
+  //    , {Key_LeftGui, Key_LeftCurlyBracket, 250}
+  //    , {Key_RightAlt, Key_RightCurlyBracket, 250}
+  //    , {Key_LeftAlt, Key_RightCurlyBracket, 250}
+  //    , {Key_LeftControl, Key_LeftCurlyBracket, 250}
+  //    , {Key_RightControl, Key_RightCurlyBracket, 250}
+  //    , SPACECADET_MAP_END
+  //  };
   //Set the map.
-  SpaceCadet.map = spacecadetmap;
+  //  SpaceCadet.map = spacecadetmap;
 
   // LEDDigitalRainEffect.DROP_TICKS = 22; // Make the rain fall faster
 
