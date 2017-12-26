@@ -412,7 +412,8 @@ void setup() {
 
   QUKEYS(
     kaleidoscope::Qukey(0, 2, 7, Key_LeftShift),     // Enter/shift
-    kaleidoscope::Qukey(0, 2, 8, Key_LeftShift)     // Enter/shift
+    kaleidoscope::Qukey(0, 2, 8, Key_RightShift),     // Enter/shift
+    kaleidoscope::Qukey(0, 3, 0, Key_LeftShift),     // PgDown/shift
 //    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),      // ( / Ctrl
 //    kaleidoscope::Qukey(0, 3, 8, Key_RightControl),      // ) / Ctrl
 //    kaleidoscope::Qukey(0, 2, 3, Key_LeftControl),  // D/ctrl
