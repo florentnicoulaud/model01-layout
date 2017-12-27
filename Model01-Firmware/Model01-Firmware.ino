@@ -165,7 +165,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
   [COLEMAK] = KEYMAP_STACKED
   (Key_Backtick, Key_1, Key_2, Key_3, Key_4, Key_5, Key_Escape,
    Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
-   Key_PageUp,   Key_A, Key_R, Key_S, Key_T, Key_D,
+   Key_Tab,   Key_A, Key_R, Key_S, Key_T, Key_D,
    Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, LCTRL(Key_LeftShift),
    Key_LeftAlt, Key_Backspace, Key_Enter, Key_LeftControl,
    ShiftToLayer(FUNCTION),
@@ -180,8 +180,8 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
   [FUNCTION] =  KEYMAP_STACKED
   (M(DEAD_TILDE),      Key_F1,  Key_F2,  Key_F3, Key_F4, Key_F5, Key_LEDEffectNext,
    ___,  M(A_TREMA), M(A_CIRCONFLEXE), M(DEAD_TILDE), M(DEAD_AIGU), M(EURO_POUND), Key_F12,
-   Key_Home, M(A_GRAVE),  M(DEAD_GRAVE), Key_Home, Key_End, M(DEAD_TREMA),
-   Key_End,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
+   Key_PageUp, M(A_GRAVE),  M(DEAD_GRAVE), Key_Home, Key_End, M(DEAD_TREMA),
+   ___,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
    ___, Key_Delete, ___, ___,
    ___,
 
