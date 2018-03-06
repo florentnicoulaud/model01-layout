@@ -174,7 +174,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
                   Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightControl, Key_Enter, Key_Spacebar, Key_LeftAlt,
+   Key_Tab, Key_Enter, Key_Spacebar, Key_Delete,
    ShiftToLayer(FUNCTION)),
 
   [FUNCTION] =  KEYMAP_STACKED
@@ -189,7 +189,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Consumer_PlaySlashPause,    Key_LeftCurlyBracket, Key_RightCurlyBracket,     M(U_GRAVE),    M(U_TREMA), M(O_TREMA), Key_Pipe,
                                Key_LeftBracket, M(E_GRAVE), M(E_AIGU), M(I_TREMA), M(O_CIRCONFLEXE), M(E_CIRCONFLEXE),
    Consumer_VolumeDecrement,   Key_RightBracket, Key_LeftArrow, Key_UpArrow, Key_DownArrow,  Key_RightArrow,    Key_Backslash,
-   ___, ___, ___, ___,
+   ___, ___, ___, Key_Backspace,
    ___),
 
 
@@ -411,9 +411,10 @@ void setup() {
 
 
   QUKEYS(
-    kaleidoscope::Qukey(0, 2, 7, Key_LeftShift),     // Enter/shift
-    kaleidoscope::Qukey(0, 2, 8, Key_RightShift),     // Enter/shift
     kaleidoscope::Qukey(0, 3, 0, Key_LeftShift),     // PgDown/shift
+    kaleidoscope::Qukey(0, 2, 7, Key_LeftShift),     // Enter/shift
+    kaleidoscope::Qukey(0, 3, 8, Key_RightControl),     // Tab/ctrl
+    kaleidoscope::Qukey(0, 2, 8, Key_RightShift),     // Enter/shift
 //    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),      // ( / Ctrl
 //    kaleidoscope::Qukey(0, 3, 8, Key_RightControl),      // ) / Ctrl
 //    kaleidoscope::Qukey(0, 2, 3, Key_LeftControl),  // D/ctrl
