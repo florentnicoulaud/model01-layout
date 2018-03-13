@@ -14,7 +14,7 @@
 #include "Kaleidoscope.h"
 
 // Support for keys that move the mouse
-#include "Kaleidoscope-MouseKeys.h"
+//#include "Kaleidoscope-MouseKeys.h"
 
 // Support for macros
 #include "Kaleidoscope-Macros.h"
@@ -30,10 +30,10 @@
 
 // Support for the "Boot greeting" effect, which pulses the 'LED' button for 10s
 // when the keyboard is connected to a computer (or that computer is powered on)
-#include "Kaleidoscope-LEDEffect-BootGreeting.h"
+//#include "Kaleidoscope-LEDEffect-BootGreeting.h"
 
 // Support for LED modes that set all LEDs to a single color
-#include "Kaleidoscope-LEDEffect-SolidColor.h"
+//#include "Kaleidoscope-LEDEffect-SolidColor.h"
 
 // Support for an LED mode that makes all the LEDs 'breathe'
 #include "Kaleidoscope-LEDEffect-Breathe.h"
@@ -48,17 +48,16 @@
 #include "Kaleidoscope-LED-Stalker.h"
 
 // Support for an LED mode that prints the keys you press in letters 4px high
-#include "Kaleidoscope-LED-AlphaSquare.h"
+//#include "Kaleidoscope-LED-AlphaSquare.h"
 
 // Support for Keyboardio's internal keyboard testing mode
-#include "Kaleidoscope-Model01-TestMode.h"
+//#include "Kaleidoscope-Model01-TestMode.h"
 
-#include <Kaleidoscope-DualUse.h>
-#include <Kaleidoscope-SpaceCadet.h>
 #include <Kaleidoscope-Qukeys.h>
 
 #include <Kaleidoscope-Heatmap.h>
 #include <Kaleidoscope-LEDEffect-DigitalRain.h>
+#include <Kaleidoscope-LEDEffect-FunctionalColor.h>
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
     The names aren't particularly important. What is important is that each
@@ -167,7 +166,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
    Key_Tab,   Key_A, Key_R, Key_S, Key_T, Key_D,
    Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, LCTRL(Key_LeftShift),
-   Key_LeftAlt, Key_Backspace, Key_Enter, Key_Tab,
+   Key_LeftAlt, Key_Backspace, Key_Enter, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
    Key_Delete,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
@@ -334,15 +333,21 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 // Keyboardio Model 01.
 
 
-static kaleidoscope::LEDSolidColor solidRed(160, 0, 0);
-static kaleidoscope::LEDSolidColor solidOrange(140, 70, 0);
-static kaleidoscope::LEDSolidColor solidYellow(130, 100, 0);
-static kaleidoscope::LEDSolidColor solidGreen(0, 160, 0);
-static kaleidoscope::LEDSolidColor solidBlue(0, 70, 130);
-static kaleidoscope::LEDSolidColor solidIndigo(0, 0, 170);
-static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
+//static kaleidoscope::LEDSolidColor solidRed(160, 0, 0);
+//static kaleidoscope::LEDSolidColor solidOrange(140, 70, 0);
+//static kaleidoscope::LEDSolidColor solidYellow(130, 100, 0);
+//static kaleidoscope::LEDSolidColor solidGreen(0, 160, 0);
+//static kaleidoscope::LEDSolidColor solidBlue(0, 70, 130);
+//static kaleidoscope::LEDSolidColor solidIndigo(0, 0, 170);
+//static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
 
 
+// Functional colors
+// You can make multiple variations of the theme.
+// Warning: having several versions consumes a lot of memory!
+kaleidoscope::LEDFunctionalColor FunColor;
+//kaleidoscope::LEDFunctionalColor FunColorMedium;
+//kaleidoscope::LEDFunctionalColor FunColorLow;
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
     It's called when your keyboard first powers up. This is where you set up
@@ -361,16 +366,18 @@ void setup() {
     &Qukeys,
 
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
-    &BootGreetingEffect,
+//    &BootGreetingEffect,
 
     // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
-    &TestMode,
+//    &TestMode,
 
     // LEDControl provides support for other LED modes
     &LEDControl,
 
-    // We start with the LED effect that turns off all the LEDs.
-    &LEDOff,
+    &FunColor,
+//    &FunColorMedium, &FunColorLow,
+    &HeatmapEffect,
+    &LEDDigitalRainEffect,
 
     // The rainbow effect changes the color of all of the keyboard's keys at the same time
     // running through all the colors of the rainbow.
@@ -379,9 +386,6 @@ void setup() {
     // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
     // and slowly moves the rainbow across your keyboard
     //&LEDRainbowWaveEffect,
-
-    &HeatmapEffect,
-    &LEDDigitalRainEffect,
 
     // The chase effect follows the adventure of a blue pixel which chases a red pixel across
     // your keyboard. Spoiler: the blue pixel never catches the red pixel
@@ -400,20 +404,22 @@ void setup() {
     // The stalker effect lights up the keys you've pressed recently
     &StalkerEffect,
 
+    // We end with the LED effect that turns off all the LEDs.
+    &LEDOff,
+    
     // The numlock plugin is responsible for lighting up the 'numpad' mode
     // with a custom LED effect
     &NumLock,
 
     &Macros
-    //    &DualUse,
-    //    &SpaceCadet,
   );
 
 
   QUKEYS(
     kaleidoscope::Qukey(0, 3, 0, Key_LeftShift),     // PgDown/shift
     kaleidoscope::Qukey(0, 2, 7, Key_LeftShift),     // Enter/shift
-    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),     // Tab/ctrl
+//    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),     // Tab/ctrl
+
     kaleidoscope::Qukey(0, 3, 8, Key_RightControl),     // Tab/ctrl
     kaleidoscope::Qukey(0, 2, 8, Key_RightShift),     // Enter/shift
 //    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),      // ( / Ctrl
@@ -421,21 +427,6 @@ void setup() {
 //    kaleidoscope::Qukey(0, 2, 3, Key_LeftControl),  // D/ctrl
 //    kaleidoscope::Qukey(0, 2, 4, Key_LeftShift)     // F/shift
   )
-  //Set the keymap with a 250ms timeout per-key
-  //Setting is {KeyThatWasPressed, AlternativeKeyToSend, TimeoutInMS}
-  //Note: must end with the SPACECADET_MAP_END delimiter
-  //  static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
-  //    {Key_LeftShift, Key_Enter, 250}
-  //    , {Key_RightShift, Key_Enter, 250}
-  //    , {Key_LeftGui, Key_LeftCurlyBracket, 250}
-  //    , {Key_RightAlt, Key_RightCurlyBracket, 250}
-  //    , {Key_LeftAlt, Key_RightCurlyBracket, 250}
-  //    , {Key_LeftControl, Key_LeftCurlyBracket, 250}
-  //    , {Key_RightControl, Key_RightCurlyBracket, 250}
-  //    , SPACECADET_MAP_END
-  //  };
-  //Set the map.
-  //  SpaceCadet.map = spacecadetmap;
 
   // LEDDigitalRainEffect.DROP_TICKS = 22; // Make the rain fall faster
 
@@ -460,7 +451,87 @@ void setup() {
   // We want to make sure that the firmware starts with LED effects off
   // This avoids over-taxing devices that don't have a lot of power to share
   // with USB devices
-  LEDOff.activate();
+//  LEDOff.activate();
+
+  // LED FunColors config
+  // Optionally Make things more human readable by naming your colors
+  cRGB antiquewhite = CRGB(250, 235, 215);
+  cRGB blue = CRGB(0, 0, 255);
+  cRGB cyan = CRGB(0, 255, 255);
+  cRGB green = CRGB(0, 128, 0);
+  cRGB lightskyblue = CRGB(135, 206, 250);
+  cRGB lime = CRGB(0, 255, 0);
+  cRGB mintcream = CRGB(245, 255, 250);
+  cRGB orange = CRGB(255, 165, 0);
+  cRGB orangered = CRGB(255, 100, 0);
+  cRGB palegreen = CRGB(152, 251, 152);
+  cRGB pink = CRGB(255, 192, 203);
+  cRGB red = CRGB(255, 0, 0);
+  cRGB skyblue = CRGB(135, 206, 235);
+  cRGB slateblue = CRGB(106, 90, 205);
+  cRGB violet = CRGB(238, 130, 238);
+  cRGB white = CRGB(255, 255, 255);
+  cRGB yellow = CRGB(255, 255, 0);
+  cRGB yellowgreen = CRGB(154, 205, 50);
+
+  // If your FUNCTION layer is not the default, you must set it here
+  FunColor.functionLayer = FUNCTION;
+
+  // Here we can set custom colors for your FunctionalColor instance.
+  // You can optionally specify a brightness value, 0-255 to dim your lights.
+
+  // Set this first to provide a "default" color for all keys, then override with the other settings.
+  FunColor.all(CRGB(250, 235, 215));
+
+  // Set this second to change all modifiers (non-alphabet/numeric/punctuation keys)
+  FunColor.allModifiers(CRGB(250, 235, 215));
+
+  // Set this before individual mouse settings to change all mouse-related keys
+  FunColor.allMouse(CRGB(0, 200, 200));
+
+  //Set individual groups of colors. You may delete any lines you don't need.
+  FunColor.escape(red, 170);
+  FunColor.numbers(white, 160);
+  FunColor.letters(antiquewhite, 100);
+  FunColor.punctuation(antiquewhite, 170);
+  FunColor.brackets(antiquewhite, 200);
+  FunColor.backslash(antiquewhite, 170);
+  FunColor.pipe(antiquewhite, 170);
+  FunColor.tab(white, 170);
+  FunColor.backspace(red, 170);
+  FunColor.del(red, 170);
+  FunColor.enter(white, 170);
+  FunColor.arrows(white, 170);
+  FunColor.nav(yellow, 170);
+  FunColor.insert(yellow, 170);
+  FunColor.shift(palegreen, 170);
+  FunColor.ctrl(skyblue, 170);
+  FunColor.alt(green, 170);
+  FunColor.cmd(CRGB(250, 235, 215));
+  FunColor.app(CRGB(250, 235, 215));
+  FunColor.printscreen(CRGB(250, 235, 215));
+  FunColor.pause(CRGB(250, 235, 215));
+  FunColor.scrolllock(CRGB(250, 235, 215));
+  FunColor.capslock(CRGB(250, 235, 215));
+  FunColor.fkeys(red, 170);
+  FunColor.fn(CRGB(250, 235, 215));
+  FunColor.media(CRGB(250, 235, 215));
+  FunColor.led(blue, 190);
+  FunColor.mousemove(cyan, 170);
+  FunColor.mousebuttons(lightskyblue, 170);
+  FunColor.mousewarp(cyan, 100);
+  FunColor.mousescroll(lightskyblue, 100);
+
+  //Copy new settings to the dimmed versions
+//  FunColorMedium = FunColor;
+//  FunColorLow = FunColor;
+
+  // You could make adjustments to your other versions' groups here, if desired.
+
+  // Adjust the brightness of dimmed versions here from 0-255
+    FunColor.brightness(255);
+//  FunColorMedium.brightness(210);
+//  FunColorLow.brightness(170);
 
 }
 
