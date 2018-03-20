@@ -166,7 +166,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_LeftGui, Key_Q, Key_W, Key_F, Key_P, Key_G, Key_Tab,
    Key_Tab,   Key_A, Key_R, Key_S, Key_T, Key_D,
    Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, LCTRL(Key_LeftShift),
-   Key_LeftAlt, Key_Backspace, Key_Enter, Key_LeftControl,
+   Key_LeftAlt, Key_Backspace, Key_Enter, Key_Tab,
    ShiftToLayer(FUNCTION),
 
    Key_Delete,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
@@ -406,7 +406,7 @@ void setup() {
 
     // We end with the LED effect that turns off all the LEDs.
     &LEDOff,
-    
+
     // The numlock plugin is responsible for lighting up the 'numpad' mode
     // with a custom LED effect
     &NumLock,
@@ -418,8 +418,7 @@ void setup() {
   QUKEYS(
     kaleidoscope::Qukey(0, 3, 0, Key_LeftShift),     // PgDown/shift
     kaleidoscope::Qukey(0, 2, 7, Key_LeftShift),     // Enter/shift
-//    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),     // Tab/ctrl
-
+    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),     // Tab/ctrl
     kaleidoscope::Qukey(0, 3, 8, Key_RightControl),     // Tab/ctrl
     kaleidoscope::Qukey(0, 2, 8, Key_RightShift),     // Enter/shift
 //    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),      // ( / Ctrl
@@ -427,6 +426,8 @@ void setup() {
 //    kaleidoscope::Qukey(0, 2, 3, Key_LeftControl),  // D/ctrl
 //    kaleidoscope::Qukey(0, 2, 4, Key_LeftShift)     // F/shift
   )
+
+  // Qukeys.setReleaseDelay(20);
 
   // LEDDigitalRainEffect.DROP_TICKS = 22; // Make the rain fall faster
 
