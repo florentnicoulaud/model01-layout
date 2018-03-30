@@ -30,7 +30,7 @@
 
 // Support for the "Boot greeting" effect, which pulses the 'LED' button for 10s
 // when the keyboard is connected to a computer (or that computer is powered on)
-//#include "Kaleidoscope-LEDEffect-BootGreeting.h"
+#include "Kaleidoscope-LEDEffect-BootGreeting.h"
 
 // Support for LED modes that set all LEDs to a single color
 //#include "Kaleidoscope-LEDEffect-SolidColor.h"
@@ -57,7 +57,6 @@
 
 #include <Kaleidoscope-Heatmap.h>
 #include <Kaleidoscope-LEDEffect-DigitalRain.h>
-#include <Kaleidoscope-LEDEffect-FunctionalColor.h>
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
     The names aren't particularly important. What is important is that each
@@ -341,13 +340,6 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 //static kaleidoscope::LEDSolidColor solidIndigo(0, 0, 170);
 //static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
 
-
-// Functional colors
-// You can make multiple variations of the theme.
-// Warning: having several versions consumes a lot of memory!
-kaleidoscope::LEDFunctionalColor FunColor;
-//kaleidoscope::LEDFunctionalColor FunColorMedium;
-//kaleidoscope::LEDFunctionalColor FunColorLow;
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
     It's called when your keyboard first powers up. This is where you set up
