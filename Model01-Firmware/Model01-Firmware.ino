@@ -417,7 +417,7 @@ void setup() {
 //    kaleidoscope::Qukey(0, 2, 4, Key_LeftShift)     // F/shift
   )
 
-  Qukeys.setTimeout(160);
+  Qukeys.setTimeout(200);
   Qukeys.setReleaseDelay(150);
 
   LEDDigitalRainEffect.DROP_TICKS = 75; // Make the rain fall slower/faster
