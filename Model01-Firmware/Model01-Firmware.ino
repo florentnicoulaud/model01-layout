@@ -58,6 +58,9 @@
 #include <Kaleidoscope-Heatmap.h>
 #include <Kaleidoscope-LEDEffect-DigitalRain.h>
 
+#include <Kaleidoscope-LEDEffect-FunctionalColor.h>
+kaleidoscope::LEDFunctionalColor::FCPlugin funColor;
+
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
     The names aren't particularly important. What is important is that each
     is unique.
@@ -366,6 +369,7 @@ void setup() {
     // LEDControl provides support for other LED modes
     &LEDControl,
 
+    &funColor,
     &LEDDigitalRainEffect,
     &HeatmapEffect,
 
