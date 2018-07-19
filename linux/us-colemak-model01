@@ -34,7 +34,7 @@ xkb_symbols "basic" {
     key <AC02> {	[	  s,	S		]	}; // home
     key <AC03> {	[	  d,	D,  dead_diaeresis,       asciitilde ] };
     key <AC04> {	[	  f,	F,      dead_tilde,       asciitilde ] };
-    key <AC05> {	[	  g,	G,        EuroSign,            pound ] };
+    key <AC05> {	[	  g,	G,        EuroSign,         sterling ] };
     key <AC06> {	[	  h,	H		]	}; // [
     key <AC07> {	[	  j,	J		]	}; // {
     key <AC08> {	[	  k,	K		]	}; // ]
