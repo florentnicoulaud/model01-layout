@@ -310,7 +310,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
         return MACRODOWN(I(25), D(RightAlt),  T(V), U(RightAlt));
         break;
         case EURO_POUND:
-        return MACRODOWN(I(25), D(RightAlt),  T(5), U(RightAlt));
+        return MACRODOWN(I(25), D(RightAlt),  T(G), U(RightAlt));
         break;
         case DEAD_AIGU:
         return MACRODOWN(I(25), D(RightAlt),  T(P), U(RightAlt));
