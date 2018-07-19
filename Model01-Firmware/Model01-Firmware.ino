@@ -268,64 +268,64 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
         versionInfoMacro(keyState);
         break;
         case E_AIGU:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(E), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(E), U(RightAlt));
         break;
         case E_GRAVE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(N), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(N), U(RightAlt));
         break;
         case E_CIRCONFLEXE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Quote), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(Quote), U(RightAlt));
         break;
         case A_GRAVE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(A), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(A), U(RightAlt));
         break;
         case A_TREMA:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Q), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(Q), U(RightAlt));
         break;
         case A_CIRCONFLEXE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(W), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(W), U(RightAlt));
         break;
         case O_CIRCONFLEXE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(O), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(O), U(RightAlt));
         break;
         case O_TREMA:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Semicolon), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(Semicolon), U(RightAlt));
         break;
         case I_TREMA:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(I), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(I), U(RightAlt));
         break;
         case U_GRAVE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(U), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(U), U(RightAlt));
         break;
         case U_TREMA:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Y), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(Y), U(RightAlt));
         break;
         case C_CEDILLE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(C), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(C), U(RightAlt));
         break;
         case E_DANS_A:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(Z), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(Z), U(RightAlt));
         break;
         case E_DANS_O:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(V), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(V), U(RightAlt));
         break;
         case EURO_POUND:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(5), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(5), U(RightAlt));
         break;
         case DEAD_AIGU:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(P), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(P), U(RightAlt));
         break;
         case DEAD_GRAVE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(R), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(R), U(RightAlt));
         break;
         case DEAD_CIRCONFLEXE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(X), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(X), U(RightAlt));
         break;
         case DEAD_TREMA:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(D), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(D), U(RightAlt));
         break;
         case DEAD_TILDE:
-        return MACRODOWN(I(25), D(LeftControl), D(LeftAlt),  T(F), U(LeftAlt), U(LeftControl));
+        return MACRODOWN(I(25), D(RightAlt),  T(F), U(RightAlt));
         break;
         case M_LNX:
         //HostOS.os(kaleidoscope::hostos::LINUX);
@@ -427,8 +427,8 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
       // LEDControl provides support for other LED modes
       LEDControl,
 
-      funColor,
       LEDDigitalRainEffect,
+      funColor,
       HeatmapEffect,
 
       // The rainbow effect changes the color of all of the keyboard's keys at the same time
@@ -509,7 +509,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
       Qukeys.setTimeout(200);
       Qukeys.setReleaseDelay(150);
 
-      LEDDigitalRainEffect.DROP_TICKS = 75; // Make the rain fall slower/faster
+      LEDDigitalRainEffect.DROP_TICKS = 35; // Make the rain fall slower/faster
 
       // While we hope to improve this in the future, the NumPad plugin
       // needs to be explicitly told which keymap layer is your numpad layer
