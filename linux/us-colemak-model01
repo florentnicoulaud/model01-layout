@@ -17,37 +17,37 @@ xkb_symbols "basic" {
     key <AE11> {	[     minus,	underscore	]	};
     key <AE12> {	[     equal,	plus		]	};
 
-    key <AD01> {	[	  q,	Q 		]	};
-    key <AD02> {	[	  w,	W		]	};
+    key <AD01> {	[	  q,	Q,      adiaeresis,       Adiaeresis ] };
+    key <AD02> {	[	  w,	W,     acircumflex,      Acircumflex ] };
     key <AD03> {	[	  e,	E,          eacute,           Eacute ] };
-    key <AD04> {	[	  r,	R		]	};
-    key <AD05> {	[	  t,	T		]	};
-    key <AD06> {	[	  y,	Y		]	};
-    key <AD07> {	[	  u,	U		]	};
-    key <AD08> {	[	  i,	I		]	};
-    key <AD09> {	[	  o,	O		]	};
-    key <AD10> {	[	  p,	P		]	};
+    key <AD04> {	[	  r,	R,      dead_grave,       asciitilde ] };
+    key <AD05> {	[	  t,	T		]	}; // end
+    key <AD06> {	[	  y,	Y,      udiaeresis,       Udiaeresis ] };
+    key <AD07> {	[	  u,	U,          ugrave,           Ugrave ] };
+    key <AD08> {	[	  i,	I,      idiaeresis,       Idiaeresis ] };
+    key <AD09> {	[	  o,	O,     ocircumflex,      Ocircumflex ] };
+    key <AD10> {	[	  p,	P,      dead_acute, dead_doubleacute ] };
     key <AD11> {	[ bracketleft,	braceleft	]	};
     key <AD12> {	[ bracketright,	braceright	]	};
 
     key <AC01> {	[	  a,	A,          agrave,           Agrave ] };
-    key <AC02> {	[	  s,	S		]	};
-    key <AC03> {	[	  d,	D		]	};
-    key <AC04> {	[	  f,	F		]	};
-    key <AC05> {	[	  g,	G		]	};
-    key <AC06> {	[	  h,	H		]	};
-    key <AC07> {	[	  j,	J		]	};
-    key <AC08> {	[	  k,	K		]	};
-    key <AC09> {	[	  l,	L		]	};
-    key <AC10> {	[ semicolon,	colon		]	};
-    key <AC11> {	[ apostrophe,	quotedbl	]	};
+    key <AC02> {	[	  s,	S		]	}; // home
+    key <AC03> {	[	  d,	D,  dead_diaeresis,       asciitilde ] };
+    key <AC04> {	[	  f,	F,      dead_tilde,       asciitilde ] };
+    key <AC05> {	[	  g,	G,        EuroSign,            pound ] };
+    key <AC06> {	[	  h,	H		]	}; // [
+    key <AC07> {	[	  j,	J		]	}; // {
+    key <AC08> {	[	  k,	K		]	}; // ]
+    key <AC09> {	[	  l,	L		]	}; // }
+    key <AC10> {	[ semicolon,	colon,        odiaeresis,       Odiaeresis ] };
+    key <AC11> {	[ apostrophe,	quotedbl,     ecircumflex,      Ecircumflex ] };
 
-    key <AB01> {	[	  z,	Z 		]	};
-    key <AB02> {	[	  x,	X		]	};
-    key <AB03> {	[	  c,	C		]	};
-    key <AB04> {	[	  v,	V		]	};
+    key <AB01> {	[	  z,	Z,              ae,               AE ] };
+    key <AB02> {	[	  x,	X, dead_circumflex,       asciitilde ] };
+    key <AB03> {	[	  c,	C,        ccedilla,         Ccedilla ] };
+    key <AB04> {	[	  v,	V,              oe,               OE ] };
     key <AB05> {	[	  b,	B		]	};
-    key <AB06> {	[	  n,	N, egrave, Egrave       ] };
+    key <AB06> {	[	  n,	N,          egrave,           Egrave ] };
     key <AB07> {	[	  m,	M		]	};
     key <AB08> {	[     comma,	less		]	};
     key <AB09> {	[    period,	greater		]	};
@@ -490,8 +490,8 @@ xkb_symbols "dvorak-r" {
 };
 
 // Classic dvorak layout
-// by Piter Punk <piterpk@terra.com.br> - 2006-07-06 
-// Based on dvorak layout and e-mail from Russel L. Harris rlharris@oplink.net 
+// by Piter Punk <piterpk@terra.com.br> - 2006-07-06
+// Based on dvorak layout and e-mail from Russel L. Harris rlharris@oplink.net
 // on xorg list.
 partial alphanumeric_keys
 xkb_symbols "dvorak-classic" {
@@ -880,7 +880,7 @@ xkb_symbols "classmate-intl" {
 
     key <LSGT> { [ backslash,	bar,		backslash,	bar ] };
 
-    key <KP7>  { [	KP_Home,		KP_7,	
+    key <KP7>  { [	KP_Home,		KP_7,
 			onehalf,		dead_horn	] };
     key <KP8>  { [	KP_Up,			KP_8,
 			threequarters,		dead_ogonek	] };
@@ -959,7 +959,7 @@ xkb_symbols "classmate-altgr-intl" {
 
     key <LSGT> { [ backslash,	bar,		backslash,	bar ] };
 
-    key <KP7>  { [	KP_Home,		KP_7,	
+    key <KP7>  { [	KP_Home,		KP_7,
 			dead_horn,		dead_horn	] };
     key <KP8>  { [	KP_Up,			KP_8,
 			dead_ogonek,		dead_ogonek	] };
