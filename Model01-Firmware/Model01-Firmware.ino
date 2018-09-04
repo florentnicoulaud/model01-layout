@@ -192,7 +192,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
     (M(DEAD_TILDE),      Key_F1,  Key_F2,  Key_F3, Key_F4, Key_F5, Key_LEDEffectNext,
     ___,  M(A_TREMA), M(A_CIRCONFLEXE), M(DEAD_TILDE), M(DEAD_AIGU), M(EURO_POUND), Key_F12,
     Key_PageUp, M(A_GRAVE),  M(DEAD_GRAVE), Key_Home, Key_End, M(DEAD_TREMA),
-    ___,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
+    Key_PageDown,  M(E_DANS_A), M(DEAD_CIRCONFLEXE),  M(C_CEDILLE), M(E_DANS_O), ___,  ___,
     ___, Key_Delete, ___, ___,
     ___,
 
