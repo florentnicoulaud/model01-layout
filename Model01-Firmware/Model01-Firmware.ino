@@ -510,6 +510,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
       Qukeys.setReleaseDelay(150);
 
       LEDDigitalRainEffect.DROP_TICKS = 35; // Make the rain fall slower/faster
+      LEDDigitalRainEffect.ENABLE_CHRISTMAS_LIGHTS = true;
 
       // While we hope to improve this in the future, the NumPad plugin
       // needs to be explicitly told which keymap layer is your numpad layer
