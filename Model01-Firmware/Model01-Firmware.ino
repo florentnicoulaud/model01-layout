@@ -200,7 +200,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
     Consumer_PlaySlashPause,    Key_LeftCurlyBracket, Key_RightCurlyBracket,     M(U_GRAVE),    M(U_TREMA), M(O_TREMA), Key_Pipe,
     Key_LeftBracket, M(E_GRAVE), M(E_AIGU), M(I_TREMA), M(O_CIRCONFLEXE), M(E_CIRCONFLEXE),
     Consumer_VolumeDecrement,   Key_RightBracket, Key_LeftArrow, Key_UpArrow, Key_DownArrow,  Key_RightArrow,    Key_Backslash,
-    ___, LCTRL(Key_LeftArrow), ___, LCTRL(Key_RightArrow),
+    LCTRL(Key_LeftArrow), ___, ___, LCTRL(Key_RightArrow),
     ___),
 
 
