@@ -13,8 +13,15 @@ as well as the Kaleidoscope plugins we use in the Model 01's firmware
 // The Kaleidoscope core
 #include "Kaleidoscope.h"
 
+// Support for storing the keymap in EEPROM
+#include "Kaleidoscope-EEPROM-Settings.h"
+#include "Kaleidoscope-EEPROM-Keymap.h"
+
+// Support for communicating with the host via a simple Serial protocol
+#include "Kaleidoscope-FocusSerial.h"
+
 // Support for keys that move the mouse
-//#include "Kaleidoscope-MouseKeys.h"
+// #include "Kaleidoscope-MouseKeys.h"
 
 // Support for macros
 #include "Kaleidoscope-Macros.h"
@@ -25,15 +32,12 @@ as well as the Kaleidoscope plugins we use in the Model 01's firmware
 // Support for "Numpad" mode, which is mostly just the Numpad specific LED mode
 #include "Kaleidoscope-NumPad.h"
 
-// Support for an "LED off mode"
-#include "LED-Off.h"
-
 // Support for the "Boot greeting" effect, which pulses the 'LED' button for 10s
 // when the keyboard is connected to a computer (or that computer is powered on)
 #include "Kaleidoscope-LEDEffect-BootGreeting.h"
 
 // Support for LED modes that set all LEDs to a single color
-//#include "Kaleidoscope-LEDEffect-SolidColor.h"
+// #include "Kaleidoscope-LEDEffect-SolidColor.h"
 
 // Support for an LED mode that makes all the LEDs 'breathe'
 #include "Kaleidoscope-LEDEffect-Breathe.h"
@@ -50,8 +54,14 @@ as well as the Kaleidoscope plugins we use in the Model 01's firmware
 // Support for an LED mode that prints the keys you press in letters 4px high
 //#include "Kaleidoscope-LED-AlphaSquare.h"
 
+// Support for shared palettes for other plugins, like Colormap below
+#include "Kaleidoscope-LED-Palette-Theme.h"
+
+// Support for an LED mode that lets one configure per-layer color maps
+#include "Kaleidoscope-Colormap.h"
+
 // Support for Keyboardio's internal keyboard testing mode
-//#include "Kaleidoscope-Model01-TestMode.h"
+#include "Kaleidoscope-HardwareTestMode.h"
 
 // Support for host power management (suspend & wakeup)
 #include "Kaleidoscope-HostPowerManagement.h"
@@ -66,10 +76,7 @@ as well as the Kaleidoscope plugins we use in the Model 01's firmware
 #include <Kaleidoscope-Qukeys.h>
 
 #include <Kaleidoscope-Heatmap.h>
-#include <Kaleidoscope-LEDEffect-DigitalRain.h>
-
-#include <Kaleidoscope-LEDEffect-FunctionalColor.h>
-kaleidoscope::LEDFunctionalColor::FCPlugin funColor;
+// #include <Kaleidoscope-LEDEffect-DigitalRain.h>
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
 The names aren't particularly important. What is important is that each
@@ -164,14 +171,14 @@ This 'enum' lets us use names like QWERTY, FUNCTION, and NUMPAD in place of
 the numbers 0, 1 and 2.
 */
 
-enum { COLEMAK, FUNCTION, NUMPAD, QWERTY }; // layers
+enum { COLEMAK, FUNCTION }; // layers
 
 /* This comment temporarily turns off astyle's indent enforcement
 so we can make the keymaps actually resemble the physical key layout better
 */
 // *INDENT-OFF*
 
-const Key keymaps[][ROWS][COLS] PROGMEM = {
+KEYMAPS(
 
   [COLEMAK] = KEYMAP_STACKED
   (Key_Backtick, Key_1, Key_2, Key_3, Key_4, Key_5, Key_Escape,
@@ -184,7 +191,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
     Key_Backspace,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
     Key_F2,     Key_J, Key_L, Key_U,     Key_Y,         Key_Semicolon, Key_Equals,
     Key_H, Key_N, Key_E,     Key_I,         Key_O,         Key_Quote,
-    Key_F5,  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
+    LCTRL(Key_LeftShift),  Key_K, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
     Key_Tab, Key_Enter, Key_Spacebar, Key_Delete,
     ShiftToLayer(FUNCTION)),
 
@@ -204,37 +211,37 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
     ___),
 
 
-    [NUMPAD] =  KEYMAP_STACKED
-    (___, M(M_LNX), M(M_WIN), M(M_MAC), ___, ___, ___,
-    ___, ___, ___, ___, ___, ___, ___,
-    ___, ___, ___, ___, ___, ___,
-    ___, ___, ___, ___, ___, ___, ___,
-    ___, ___, ___, ___,
-    ___,
+    // [NUMPAD] =  KEYMAP_STACKED
+    // (___, M(M_LNX), M(M_WIN), M(M_MAC), ___, ___, ___,
+    // ___, ___, ___, ___, ___, ___, ___,
+    // ___, ___, ___, ___, ___, ___,
+    // ___, ___, ___, ___, ___, ___, ___,
+    // ___, ___, ___, ___,
+    // ___,
 
-    M(MACRO_VERSION_INFO),  ___, Key_Keypad7, Key_Keypad8,   Key_Keypad9,        Key_KeypadSubtract, ___,
-    ___,                    ___, Key_Keypad4, Key_Keypad5,   Key_Keypad6,        Key_KeypadAdd,      ___,
-    ___, Key_Keypad1, Key_Keypad2,   Key_Keypad3,        Key_Equals,         Key_Quote,
-    ___,                    ___, Key_Keypad0, Key_KeypadDot, Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
-    ___, ___, ___, ___,
-    ___),
+    // M(MACRO_VERSION_INFO),  ___, Key_Keypad7, Key_Keypad8,   Key_Keypad9,        Key_KeypadSubtract, ___,
+    // ___,                    ___, Key_Keypad4, Key_Keypad5,   Key_Keypad6,        Key_KeypadAdd,      ___,
+    // ___, Key_Keypad1, Key_Keypad2,   Key_Keypad3,        Key_Equals,         Key_Quote,
+    // ___,                    ___, Key_Keypad0, Key_KeypadDot, Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
+    // ___, ___, ___, ___,
+    // ___),
 
 
-    [QWERTY] = KEYMAP_STACKED
-    (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-      Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
-      Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
-      Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-      Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
-      ShiftToLayer(FUNCTION),
+    // [QWERTY] = KEYMAP_STACKED
+    // (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
+    //   Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
+    //   Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
+    //   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
+    //   Key_LeftControl, Key_Backspace, Key_LeftGui, Key_LeftShift,
+    //   ShiftToLayer(FUNCTION),
 
-      ___,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
-      Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
-      Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
-      Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-      Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
-      ShiftToLayer(FUNCTION))
-    };
+    //   ___,  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_KeypadNumLock,
+    //   Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
+    //   Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
+    //   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
+    //   Key_RightShift, Key_LeftAlt, Key_Spacebar, Key_RightControl,
+    //   ShiftToLayer(FUNCTION))
+   ) // KEYMAPS(
 
     /* Re-enable astyle's indent enforcement */
     // *INDENT-ON*
@@ -356,21 +363,19 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
     /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
     * and turns them back on when it wakes up.
     */
-    void toggleLedsOnSuspendResume(kaleidoscope::HostPowerManagement::Event event) {
+    void toggleLedsOnSuspendResume(kaleidoscope::plugin::HostPowerManagement::Event event) {
       switch (event) {
-        case kaleidoscope::HostPowerManagement::Suspend:
-        LEDControl.paused = true;
-        LEDControl.set_all_leds_to({0, 0, 0});
-        LEDControl.syncLeds();
+      case kaleidoscope::plugin::HostPowerManagement::Suspend:
+        LEDControl.disable();
         break;
-        case kaleidoscope::HostPowerManagement::Resume:
-        LEDControl.paused = false;
-        LEDControl.refreshAll();
+      case kaleidoscope::plugin::HostPowerManagement::Resume:
+        LEDControl.enable();
         break;
-        case kaleidoscope::HostPowerManagement::Sleep:
+      case kaleidoscope::plugin::HostPowerManagement::Sleep:
         break;
       }
     }
+
 
     /** hostPowerManagementEventHandler dispatches power management events (suspend,
     * resume, and sleep) to other functions that perform action based on these
@@ -418,17 +423,38 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
       Qukeys,
 
+      // The EEPROMSettings & EEPROMKeymap plugins make it possible to have an
+      // editable keymap in EEPROM.
+      EEPROMSettings,
+      EEPROMKeymap,
+
+      // Focus allows bi-directional communication with the host, and is the
+      // interface through which the keymap in EEPROM can be edited.
+      Focus,
+
+      // FocusSettingsCommand adds a few Focus commands, intended to aid in
+      // changing some settings of the keyboard, such as the default layer (via the
+      // `settings.defaultLayer` command)
+      FocusSettingsCommand,
+
+      // FocusEEPROMCommand adds a set of Focus commands, which are very helpful in
+      // both debugging, and in backing up one's EEPROM contents.
+      FocusEEPROMCommand,
+
       // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
       BootGreetingEffect,
 
-      // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
-      // TestMode,
+      // The hardware test mode, which can be invoked by tapping Prog, LED and the
+      // left Fn button at the same time.
+      // HardwareTestMode,
 
       // LEDControl provides support for other LED modes
       LEDControl,
 
-      LEDDigitalRainEffect,
-      funColor,
+      // We start with the LED effect that turns off all the LEDs.
+      LEDOff,
+
+      // LEDDigitalRainEffect,
       HeatmapEffect,
 
       // The rainbow effect changes the color of all of the keyboard's keys at the same time
@@ -441,7 +467,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
       // The chase effect follows the adventure of a blue pixel which chases a red pixel across
       // your keyboard. Spoiler: the blue pixel never catches the red pixel
-      // LEDChaseEffect,
+      LEDChaseEffect,
 
       // These static effects turn your keyboard's LEDs a variety of colors
       // solidRed, solidOrange, solidYellow, solidGreen, solidBlue, solidIndigo, solidViolet,
@@ -455,6 +481,13 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
       // The stalker effect lights up the keys you've pressed recently
       StalkerEffect,
+
+      // The LED Palette Theme plugin provides a shared palette for other plugins,
+      // like Colormap below
+      LEDPaletteTheme,
+
+      // The Colormap effect makes it possible to set up per-layer colormaps
+      ColormapEffect,
 
       // We end with the LED effect that turns off all the LEDs.
       LEDOff,
@@ -495,26 +528,33 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
       Kaleidoscope.setup();
 
       QUKEYS(
-        kaleidoscope::Qukey(0, 3, 0, Key_LeftShift),     // PgDown/shift
-        kaleidoscope::Qukey(0, 2, 7, Key_LeftShift),     // Enter/shift
-        kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),     // Tab/ctrl
-        kaleidoscope::Qukey(0, 3, 8, Key_RightControl),     // Tab/ctrl
-        kaleidoscope::Qukey(0, 2, 8, Key_RightShift),     // Enter/shift
-        //    kaleidoscope::Qukey(0, 3, 7, Key_LeftControl),      // ( / Ctrl
-        //    kaleidoscope::Qukey(0, 3, 8, Key_RightControl),      // ) / Ctrl
-        //    kaleidoscope::Qukey(0, 2, 3, Key_LeftControl),  // D/ctrl
-        //    kaleidoscope::Qukey(0, 2, 4, Key_LeftShift)     // F/shift
+        kaleidoscope::plugin::Qukey(0, KeyAddr(3, 0), Key_LeftShift),    // PgDown/shift
+        kaleidoscope::plugin::Qukey(0, KeyAddr(2, 7), Key_LeftShift),    // Enter/shift (Left hand)
+        kaleidoscope::plugin::Qukey(0, KeyAddr(3, 7), Key_LeftControl),  // Tab/ctrl (Left hand)
+        kaleidoscope::plugin::Qukey(0, KeyAddr(3, 8), Key_LeftControl),  // Tab/ctrl (Right hand)
+        kaleidoscope::plugin::Qukey(0, KeyAddr(2, 8), Key_LeftShift),    // Enter/shift (Right hand)
+
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 1), Key_LeftGui),      // A
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 2), Key_LeftAlt),      // R
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 3), Key_LeftShift),    // S
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 4), Key_LeftControl),  // T
+
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 11), Key_LeftControl), // N
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 12), Key_LeftShift),   // E
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 13), Key_LeftAlt),     // I
+        // kaleidoscope::plugin::Qukey(0, KeyAddr(2, 14), Key_LeftGui),     // O
+
       )
 
-      Qukeys.setTimeout(200);
-      Qukeys.setReleaseDelay(150);
+      Qukeys.setHoldTimeout(200);
+      // Qukeys.setOverlapThreshold(30);
 
-      LEDDigitalRainEffect.DROP_TICKS = 35; // Make the rain fall slower/faster
-      LEDDigitalRainEffect.ENABLE_CHRISTMAS_LIGHTS = true;
+      // LEDDigitalRainEffect.DROP_TICKS = 35; // Make the rain fall slower/faster
+      // LEDDigitalRainEffect.ENABLE_CHRISTMAS_LIGHTS = true;
 
       // While we hope to improve this in the future, the NumPad plugin
       // needs to be explicitly told which keymap layer is your numpad layer
-      NumPad.numPadLayer = NUMPAD;
+      // NumPad.numPadLayer = NUMPAD;
 
       // We configure the AlphaSquare effect to use RED letters
       // AlphaSquare.color = CRGB(255, 0, 0);
@@ -533,8 +573,19 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
       // We want to make sure that the firmware starts with LED effects off
       // This avoids over-taxing devices that don't have a lot of power to share
       // with USB devices
-      //  LEDOff.activate();
+       LEDOff.activate();
 
+      // To make the keymap editable without flashing new firmware, we store
+      // additional layers in EEPROM. For now, we reserve space for five layers. If
+      // one wants to use these layers, just set the default layer to one in EEPROM,
+      // by using the `settings.defaultLayer` Focus command, or by using the
+      // `keymap.onlyCustom` command to use EEPROM layers only.
+      EEPROMKeymap.setup(5);
+
+      // We need to tell the Colormap plugin how many layers we want to have custom
+      // maps for. To make things simple, we set it to five layers, which is how
+      // many editable layers we have (see above).
+      ColormapEffect.max_layers(5);
     }
 
     /** loop is the second of the standard Arduino sketch functions.
